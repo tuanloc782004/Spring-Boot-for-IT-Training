@@ -1,0 +1,37 @@
+package com.example.main;
+
+import com.example.config.AppConfig;
+import com.example.dao.StudentDAO;
+import com.example.model.Student;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.List;
+
+public class MainApplication {
+	public static void main(String[] args) {
+		// 1. Khởi tạo Spring IoC Container từ file cấu hình AppConfig
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+		// 2. Lấy StudentDAO Bean từ Container
+		StudentDAO studentDAO = context.getBean(StudentDAO.class);
+
+		// 3. Thử thêm một sinh viên mới
+		System.out.println("------ Thêm sinh viên mới ------");
+		Student newStudent = new Student();
+		newStudent.setName("Le Van Tuan Loc");
+		newStudent.setEmail("tuanloc782004@gmail.com");
+		newStudent.setAge(21);
+		studentDAO.addStudent(newStudent);
+		System.out.println("Đã thêm thành công!");
+
+		// 4. Lấy và hiển thị danh sách tất cả sinh viên
+		System.out.println("\n------ Danh sách sinh viên ------");
+		List<Student> students = studentDAO.getAllStudents();
+		for (Student student : students) {
+			System.out.println(student); // Cần có method toString() trong class Student
+		}
+
+		// 5. Đóng Container
+		context.close();
+	}
+}
