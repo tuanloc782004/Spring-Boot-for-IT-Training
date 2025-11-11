@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: employee-management
+
+  # Chi dinh profile nao dang duoc kich hoat
+  # Chung ta se dat la "dev" de chay moi truong lap trinh
+  profiles:
+    active: prod 
+
+  jpa:
+    # Hien thi SQL trong console (Huu ich cho ca 2 moi truong)
+    show-sql: true
+
+  cache:
+    cache-names:
+      - employeeCount
+    caffeine:
+      spec: expireAfterWrite=1m    
+
+# Cau hinh logging
+logging:
+  level:
+    root: INFO
+    com.example.demo: DEBUG # Bat log DEBUG cho code cua chung ta

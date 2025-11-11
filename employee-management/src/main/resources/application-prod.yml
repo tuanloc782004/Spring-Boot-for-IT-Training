@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/employee_management_db
+    username: root
+    password:
+
+  jpa:
+    # "update": Tu dong cap nhat bang, khong xoa du lieu
+    hibernate:
+      ddl-auto: update 
+    database-platform: org.hibernate.dialect.MySQLDialect

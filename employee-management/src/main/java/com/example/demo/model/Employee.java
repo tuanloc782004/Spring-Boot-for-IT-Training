@@ -1,18 +1,37 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+
+@Entity
+@Table(name = "employees")
 public class Employee {
 
-	private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@NotEmpty(message = "Employee name cannot be empty") // Tên không được rỗng
 	private String name;
+
+	@NotEmpty(message = "Email cannot be empty") // Email không được rỗng
+	@Email(message = "Email should be valid") // Email phải đúng định dạng
 	private String email;
-	private String department;
+
+	@ManyToOne
+	@JoinColumn(name = "department_id", nullable = false)
+	@JsonBackReference
+	private Department department;
 
 	public Employee() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(long id, String name, String email, String department) {
+	public Employee(Long id, String name, String email, Department department) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -20,11 +39,11 @@ public class Employee {
 		this.department = department;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -44,11 +63,11 @@ public class Employee {
 		this.email = email;
 	}
 
-	public String getDepartment() {
+	public Department getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(String department) {
+	public void setDepartment(Department department) {
 		this.department = department;
 	}
 

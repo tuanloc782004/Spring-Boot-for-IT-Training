@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Employee Statistics</title>
+</head>
+<body>
+	<div class="container">
+		<h1>Employee Statistics</h1>
+
+		<hr />
+
+		<h2>
+			Total Employees: <span th:text="${totalEmployees}">0</span>
+		</h2>
+
+		<hr />
+
+		<h2>Employees by Department</h2>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Department Name</th>
+					<th>Employee Count</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="stat : ${departmentStats}">
+					<td th:text="${stat.departmentName}">IT</td>
+					<td th:text="${stat.employeeCount}">5</td>
+				</tr>
+				<tr th:if="${#lists.isEmpty(departmentStats)}">
+					<td colspan="2">No data available</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<br /> <a href="/employees/list">Back to Employee List</a>
+	</div>
+</body>
+</html>

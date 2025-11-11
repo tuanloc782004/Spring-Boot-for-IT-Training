@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb  # Database H2 trong bo nho
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 
+
+  h2:
+    console:
+      enabled: true # Cho phep truy cap H2 Console (http://localhost:8080/h2-console)
+
+  jpa:
+    # "create-drop": Tu dong tao bang khi khoi dong va xoa khi tat
+    hibernate:
+      ddl-auto: create-drop 
+    database-platform: org.hibernate.dialect.H2Dialect

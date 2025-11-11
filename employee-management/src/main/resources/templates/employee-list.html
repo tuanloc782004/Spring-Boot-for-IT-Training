@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Employee Management System</title>
+</head>
+<body>
+	<div class="container">
+		<h1>Employee List</h1>
+
+		<div sec:authorize="isAuthenticated()">
+			Hello, <span sec:authentication="name"></span>!
+			<form th:action="@{/logout}" method="post" style="display: inline;">
+				<button type="submit">Logout</button>
+			</form>
+		</div>
+
+		<form th:action="@{/employees/list}" method="get">
+			Search by Name: <input type="text" name="name"
+				th:value="${searchName}" /> Search by Department: <select
+				name="departmentId">
+				<option value="">-- All Departments --</option>
+				<option th:each="dept : ${allDepartments}" th:value="${dept.id}"
+					th:text="${dept.name}" th:selected="${dept.id == searchDeptId}">
+				</option>
+			</select>
+
+			<button type="submit">Search</button>
+		</form>
+		<hr />
+
+		<table border="1">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Department</th>
+					<th sec:authorize="hasRole('ADMIN')">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="emp : ${employees}">
+					<td th:text="${emp.id}">1</td>
+					<td th:text="${emp.name}">John Doe</td>
+					<td th:text="${emp.email}">john@example.com</td>
+					<td th:text="${emp.department.name}">IT</td>
+
+					<td sec:authorize="hasRole('ADMIN')"><a
+						th:href="@{/employees/edit/{id}(id=${emp.id})}">Edit</a> <a
+						th:href="@{/employees/delete/{id}(id=${emp.id})}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<br />
+
+		<div sec:authorize="hasRole('ADMIN')">
+			<a href="/employees/add">Add New Employee</a>
+		</div>
+	</div>
+</body>
+</html>
